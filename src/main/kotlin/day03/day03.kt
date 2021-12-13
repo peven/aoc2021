@@ -1,7 +1,10 @@
+import day03.PowerConsumptionCalculator
 import java.io.File
 
-private fun readInput(filePath:String):List<String> = File(filePath).readLines()
-
 fun main() {
-    val instructions = readCommands(".\\src\\main\\kotlin\\day03\\input.txt")
+    val filePath = ".\\src\\main\\kotlin\\day03\\input.txt"
+    val powerConsumptionCalculator = PowerConsumptionCalculator(File(filePath).readText())
+    val powerConsumption = powerConsumptionCalculator.calculate()
+    println("Power Consumption Ratio is $powerConsumption")
 }
+
