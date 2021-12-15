@@ -1,5 +1,6 @@
 package day03
 
+import day03.LifeSupportRatingCalculator.Comparor.compareGET
 import kotlin.test.Ignore
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -11,7 +12,7 @@ class testDay03 {
     private val sampleInput = buildString {
         appendLine("00100")
         appendLine("11110")
-        appendLine("10110")
+        appendLine("10110") //22
         appendLine("10111")
         appendLine("10101")
         appendLine("01111")
@@ -20,7 +21,7 @@ class testDay03 {
         appendLine("10000")
         appendLine("11001")
         appendLine("00010")
-        appendLine("01010")
+        appendLine("01010") //10
     }
 
     @Test
@@ -56,35 +57,71 @@ class testDay03 {
     @Test
     fun filterOutBinaryRowsWithLeastRecurringValue(){
         val matrix = buildMatrix(rowShortSample)
-        val rowNb = 2
+        val result = LifeSupportRatingCalculator(sampleInput).extractValueFromMatrix(matrix, ::compareGET)
 
-        val mostRecurringBit =  matrix.sumOf{ it[rowNb] }.times(2)
-                            .let { when { it > matrix.count() -> 1  else -> 0} }
-
-        val result = matrix.filter {it[rowNb]!=mostRecurringBit }
-        val expected = listOf(listOf(1,0,1,1,0),listOf(1,1,1,0,0))
+        val expected = listOf(1,0,1,1,0).toInt()
         assertEquals(expected, result)
     }
+
 
     @Test
     fun calculateOxygenGeneratorRating() {
         val oxygenGeneratorRating = LifeSupportRatingCalculator(sampleInput).getOxygenGeneratorRating()
-        val expectedRating = 198
+        val expectedRating = 23
         assertEquals(expectedRating, oxygenGeneratorRating)
+    }
+
+    @Test
+    fun calculateCo2ScrubberRatingForOneBinaryNumber() {
+        val co2ScrubberRating = LifeSupportRatingCalculator("1010").getCo2ScrubberRating()
+        val expectedRating = 10
+        assertEquals(expectedRating, co2ScrubberRating)
+    }
+    @Test
+    fun calculateCo2ScrubberRatingForFourBinaryNumbers() {
+        val input = buildString {
+            appendLine("00110") //6
+            appendLine("00011") //3
+            appendLine("11110") //30
+            appendLine("10110") //22
+            appendLine("11010") //26
+        }
+
+        val co2ScrubberRating = LifeSupportRatingCalculator(input).getCo2ScrubberRating()
+        val expectedRating = 3
+        assertEquals(expectedRating, co2ScrubberRating)
+    }
+
+    @Test
+    fun calculateCo2ScrubberRatingOnlyOnesInFirstColumnException() {
+        val input = buildString {
+            appendLine("10110") //22
+            appendLine("10011") //19
+            appendLine("11110") //30
+            appendLine("10110") //22
+            appendLine("11010") //26
+        }
+
+        val co2ScrubberRating = LifeSupportRatingCalculator(input).getCo2ScrubberRating()
+        val expectedRating = 26
+        assertEquals(expectedRating, co2ScrubberRating)
     }
 
     @Test
     fun calculateCo2ScrubberRating() {
         val co2ScrubberRating = LifeSupportRatingCalculator(sampleInput).getCo2ScrubberRating()
-        val expectedRating = 198
+        val expectedRating = 10
         assertEquals(expectedRating, co2ScrubberRating)
     }
 
     @Test
-    @Ignore
     fun calculateLifeSupportRating() {
         val resultingLifeSupportRating = LifeSupportRatingCalculator(sampleInput).calculate()
-        val expectedLifeSupportRating = 198
+        val expectedLifeSupportRating = 230
         assertEquals(expectedLifeSupportRating, resultingLifeSupportRating)
     }
+}
+
+private fun <Int> Iterable<Int>.toInt(): kotlin.Int {
+    return this.fold("") { acc, value -> acc.plus(value.toString())}.toInt(2)
 }
