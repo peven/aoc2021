@@ -81,4 +81,105 @@ class testDay04 {
         assertTrue(bingo.boards.count()==3)
     }
 
+    @Test
+    fun findNumberSucceedsIn1x1Board() {
+        val number = 1
+        val board = BingoBoard(listOf(listOf(1)))
+        val result = board.find(number)
+        val expected = Coord(0,0)
+        assertEquals(expected,result)
+    }
+
+    @Test
+    fun findNumberFailedIn1x1Board() {
+        val number = 1
+        val board = BingoBoard(listOf(listOf(2)))
+        val result = board.find(number)
+        val expected = null
+        assertEquals(expected,result)
+    }
+
+    @Test
+    fun findThreeNumbersIn3x3Board() {
+        val numbers = listOf(1, 3, 6)
+        val board = BingoBoard(listOf(listOf(1,3,6), listOf(2,4,5), listOf(8,7,9)))
+        var results = mutableListOf<Coord>()
+        numbers.forEach{ val result = board.find(it); if (result is Coord) results.add(result)}
+        val expected = listOf(Coord(0,0), Coord(0,1),Coord(0,2))
+        assertEquals(expected,results)
+    }
+
+    @Test
+    fun findSomeNumbersIn3x3Board() {
+        val numbers = listOf(1, 11, 3, 40, 6)
+        val board = BingoBoard(listOf(listOf(1,4,9), listOf(2,3,5), listOf(8,7,6)))
+        var results = mutableListOf<Coord>()
+        numbers.forEach{ val result = board.find(it); if (result is Coord) results.add(result)}
+        val expected = listOf(Coord(0,0), Coord(1,1),Coord(2,2))
+        assertEquals(expected,results)
+    }
+
+    @Test
+    fun validateHorizontalBingo3x3Board() {
+        val boardSize = 3
+        val matchedCoordinates = listOf(Coord(0,0), Coord(0,1),Coord(0,2))
+
+        val result = matchedCoordinates.groupingBy { key -> key.rowIndex }.eachCount()
+        val expected = mapOf(0 to boardSize)
+        assertEquals(expected,result)
+    }
+
+    @Test
+    fun validateVerticalBingo3x3Board() {
+        val boardSize = 3
+        val matchedCoordinates = listOf(Coord(0,0), Coord(1,0),Coord(3,0))
+
+        val result = matchedCoordinates.groupingBy { key -> key.columnIndex }.eachCount()
+        val expected = mapOf(0 to boardSize)
+        assertEquals(expected,result)
+    }
+
+    @Test
+    fun addCoordToBoardResultAndBingo() {
+        val boardSize = 3
+        val matchedCoordinates = listOf(Coord(0,0), Coord(1,0), Coord(3,0))
+
+        var result = BoardResult(boardSize)
+
+        matchedCoordinates.forEach { result.append(it) }
+
+        val expected = BoardResult(boardSize)
+        expected.horizontal.putAll(mapOf(0 to 1, 1 to 1, 2 to 1))
+        expected.vertical.putAll(mapOf(0 to 3, 1 to 0, 2 to 0))
+
+        assertEquals(expected,result)
+        assertTrue(result.isBingo())
+    }
+
+    @Test
+    fun addCoordToBoardResultAndNoBingo() {
+        val boardSize = 3
+        val matchedCoordinates = listOf(Coord(0,0), Coord(1,0))
+
+        var result = BoardResult(boardSize)
+
+        matchedCoordinates.forEach { result.append(it) }
+
+        val expected = BoardResult(boardSize)
+        expected.horizontal.putAll(mapOf(0 to 1, 1 to 1, 2 to 0))
+        expected.vertical.putAll(mapOf(0 to 2, 1 to 0, 2 to 0))
+
+        assertEquals(expected,result)
+        assertTrue(!result.isBingo())
+    }
+
+    @Test
+    fun playSample() {
+        val bingo = BingoGame(sampleLines)
+
+        var result = bingo.play()
+        val expected= 188*24
+
+        assertEquals(expected,result)
+    }
 }

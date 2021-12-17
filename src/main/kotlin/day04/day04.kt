@@ -9,7 +9,9 @@ fun main() {
 
     val bingoGame: BingoGame = BingoGame(inputLines)
 
+    val result = bingoGame.play()
 
+    println("Result of Part #1 is $result")
 
 }
 
