@@ -174,11 +174,21 @@ class testDay04 {
     }
 
     @Test
-    fun playSample() {
+    fun playSampleForPartOne() {
         val bingo = BingoGame(sampleLines)
 
-        var result = bingo.play()
+        var result = bingo.play(STRATEGY.WIN)
         val expected= 188*24
+
+        assertEquals(expected,result)
+    }
+
+    @Test
+    fun getLastWinningBoard() {
+        val bingo = BingoGame(sampleLines)
+
+        var result = bingo.play(STRATEGY.LOSE)
+        val expected= 148*13
 
         assertEquals(expected,result)
     }

@@ -1,6 +1,6 @@
 package day04
 
-class BingoGame(inputLines: List<String>, val step: Int=6) {
+class BingoGame(inputLines: List<String>, val step: Int = 6) {
     val numbers = getRandomNumbers(inputLines)
     val boards = initBingoBoards(inputLines)
 
@@ -9,18 +9,27 @@ class BingoGame(inputLines: List<String>, val step: Int=6) {
 
     private fun getRandomNumbers(inputLines: List<String>) = inputLines.first().split(",").map { it -> it.toInt() }
 
-    fun play(): Int {
+    fun play(strategy: STRATEGY): Int {
         var lastNumberPlayed = 0
+        var lastWinningBingoBoard: BingoBoard? = null
+        var lastWinningNumber = 0
+
         for (nb in numbers) {
             lastNumberPlayed = nb
             boards.forEach { board ->
-                if (board.play(nb))
-                {
-                    return board.score()*lastNumberPlayed
+                val bingoDetected = board.play(nb)
+                if (bingoDetected) {
+                    lastWinningBingoBoard = board
+                    lastWinningNumber = lastNumberPlayed
+
+                    if (strategy == STRATEGY.WIN) return board.score() * lastNumberPlayed
                 }
             }
         }
-        return 0
+        println(lastWinningBingoBoard)
+        println(lastWinningNumber)
+
+        return lastWinningBingoBoard?.score()?.times(lastWinningNumber) ?: 0
     }
 }
 
