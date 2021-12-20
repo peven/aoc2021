@@ -77,7 +77,7 @@ class testDay04 {
     fun buildBingoGameFromSample() {
         val bingo = BingoGame(sampleLines)
 
-        assertTrue(bingo.numbers.count()==27)
+        assertTrue(bingo.draws.count()==27)
         assertTrue(bingo.boards.count()==3)
     }
 
@@ -174,7 +174,7 @@ class testDay04 {
     }
 
     @Test
-    fun playSampleForPartOne() {
+    fun playSampleForWinningStrategy() {
         val bingo = BingoGame(sampleLines)
 
         var result = bingo.play(STRATEGY.WIN)
@@ -184,7 +184,7 @@ class testDay04 {
     }
 
     @Test
-    fun getLastWinningBoard() {
+    fun getSampleForLosingStrategy() {
         val bingo = BingoGame(sampleLines)
 
         var result = bingo.play(STRATEGY.LOSE)

@@ -7,11 +7,15 @@ private fun readCommands(filePath:String):List<String> = File(filePath).readLine
 fun main() {
     val inputLines = readCommands(".\\src\\main\\kotlin\\day04\\input.txt")
 
-    val bingoGame: BingoGame = BingoGame(inputLines)
+    val bingoGame1 = BingoGame(inputLines)
+    val resultOfWinningStrategy = bingoGame1.play(STRATEGY.WIN)
 
-    val result = bingoGame.play(STRATEGY.WIN)
+    println("Result of Part #1 is $resultOfWinningStrategy")
 
-    println("Result of Part #1 is $result")
+    val bingoGame2 = BingoGame(inputLines)
+    val resultOfLosingStrategy = bingoGame2.play(STRATEGY.LOSE)
+
+    println("Result of Part #2 is $resultOfLosingStrategy")
 
 }
 

@@ -1,6 +1,7 @@
 package day04
 
 data class BingoBoard(val matrix:List<List<Int>>) {
+    var isBingo: Boolean = false
     val boardSize = matrix.first().count()
     var boardResult = BoardResult(boardSize)
 
