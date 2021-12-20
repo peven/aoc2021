@@ -16,6 +16,5 @@ fun main() {
     val resultOfLosingStrategy = bingoGame2.play(STRATEGY.LOSE)
 
     println("Result of Part #2 is $resultOfLosingStrategy")
-
 }
 
