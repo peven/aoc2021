@@ -38,8 +38,5 @@ class testDay06 {
         assertEquals(expectedState, school)
     }
 
-    private fun evolve(school: List<Lanternfish>, days: Int): List<Lanternfish> {
-
-        return school.map { Lanternfish(it.internalClock - 1) }
-    }
 }
+

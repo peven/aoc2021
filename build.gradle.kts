@@ -14,6 +14,7 @@ repositories {
 
 dependencies {
     implementation("junit:junit:4.13.2")
+    implementation("org.kodein.di:kodein-di:7.10.0")
     testImplementation(kotlin("test"))
     testImplementation(kotlin("script-runtime"))
 }
