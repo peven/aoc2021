@@ -5,6 +5,7 @@ import org.kodein.di.DI
 import org.kodein.di.bindSingleton
 import org.kodein.di.instance
 import org.kodein.di.newInstance
+import kotlin.test.assertContentEquals
 import kotlin.test.assertEquals
 
 class testDay06 {
@@ -56,8 +57,28 @@ class testDay06 {
         val expectedState = sampleFishCountAfter80days
         assertEquals(expectedState, school.count())
     }
+
+    @Test
+    fun foldSchoolToArrayOfFishCountPerInternalClockValue()
+    {
+        val lanterns = sampleLanternfishSchool.split(',').map { it.toInt() }.fold(Array<Long>(8) { 0 }) { acc, i -> acc[i]++; return@fold acc }
+        val expected = arrayOf<Long>(0, 1, 1, 2, 1, 0, 0, 0)
+        assertContentEquals(expected,lanterns)
+    }
+
+    private fun addToList(i: Int, acc: Array<Long>): Array<Long> {
+        if (acc[i]==null)
+            acc[i]=0
+
+        acc[i]++
+
+        return acc
+    }
 }
 
 data class TestInjection(private val name:String, private val idAuthority: IdAuthority) {
     fun getNextId() = idAuthority.GetNextId()
 }
+
+
+data class Fish(private val internalClock: Int)
