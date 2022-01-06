@@ -65,20 +65,8 @@ class testDay06 {
         val expected = arrayOf<Long>(0, 1, 1, 2, 1, 0, 0, 0)
         assertContentEquals(expected,lanterns)
     }
-
-    private fun addToList(i: Int, acc: Array<Long>): Array<Long> {
-        if (acc[i]==null)
-            acc[i]=0
-
-        acc[i]++
-
-        return acc
-    }
 }
 
 data class TestInjection(private val name:String, private val idAuthority: IdAuthority) {
     fun getNextId() = idAuthority.GetNextId()
 }
-
-
-data class Fish(private val internalClock: Int)
