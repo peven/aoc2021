@@ -9,11 +9,3 @@ data class Lanternfish(val id: Int, val internalClock: Int, private val identifi
     }
 }
 
-data class School(private val fish: List<Lanternfish>, private val identifier: IdAuthority){
-
-    fun evolve(days: Int = 1): School {
-        return School(fish.fold(mutableListOf<Lanternfish>()) { acc, fishy -> (acc + fishy.evolve(days)) as MutableList<Lanternfish> }, identifier)
-    }
-
-    fun count(): Int = fish.count()
-}
