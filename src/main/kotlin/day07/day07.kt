@@ -22,11 +22,13 @@ private fun partOne(sortedPositions: List<Int>): Int {
 private fun partTwo(sortedPositions: List<Int>): Int {
     val crabCoordinator = CrabCoordinator(sortedPositions)
     val mean = crabCoordinator.getMean()
+    // Not sure why mean rounded to the closest value (up) didn't satisfy the problem.
+    // Using a range of nearest integers and keeping minOf solved it.
     val range = IntRange(mean.dec(),mean.inc())
     return range.minOf {crabCoordinator.calculateFastBurningFuel(it)}
 }
 
-fun partTwoBruteForce(sorted: List<Int>): Int {
+private fun partTwoBruteForce(sorted: List<Int>): Int {
     val crabCoordinator = CrabCoordinator(sorted)
     return crabCoordinator.calculateBestBurningFuelForRange()
 }
